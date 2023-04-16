@@ -1,6 +1,44 @@
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
 spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+      thymeleaf:
+        check-template-location: true
+        prefix: classpath:/templates/   # .html 파일을 불러오기 위한 경로 설정(src/main/resources/templates)
+        suffix: .html   # 파일 확장자
+        cache: false
+        mvc:
+          static-path-pattern: /static/** # spring mvc 정적경로 변경
+  devtools:
+    livereload:
+      enabled: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/blog?serverTimezone=Asia/Seoul
-    username: ekko
-    password: ekko1234
+    username: root
+    password: Password1!
+
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: update    # 테이블 어떻게할지 정하는 것 계속 create로 실행하면 계속 새로만들게됨 최초에만 create로하고 두번째 실행부터는 update로 수정해야한다.
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # Entity(테이블생성)할때 변수명 그대로 db에 필드로 넣어준다.
+      use-new-id-generator-mappings: false    # jpa의 db 특징 전략을 따라가지 않겠다.(false)
+    show-sql: true        # 콘솔창에 테이블 보여줌(true)
+    properties:
+      hibernate.format_sql: true  # 콘솔창에 테이블 보여줄때 이쁘게 정렬해서 보여줌
+
+    jackson:
+      serialization:
+        fail-on-empty-beans: false
